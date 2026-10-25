@@ -53,9 +53,9 @@
 **source_references:** `[{"source_type":"knowledge","source_id":"99467581-e0f3-4ba3-a177-7343cb1097b5","locator":"v1, chunk 0"}]`
 
 ### REQ-007 — Expire reset links after 30 minutes
-**Statement:** A reset link expires 30 minutes after issuance.
+**Statement:** A reset link expires 30 minutes after issuance, not 30 minutes after the reset request or first use: an unused, otherwise valid link is eligible before expiry but cannot reset the password at exactly 30 minutes after issuance or later.
 
-**Acceptance criteria:** Given a reset link was issued at a known time, when it is used before 30 minutes have elapsed, then it is eligible for reset (if otherwise valid); when it is used at or after 30 minutes, then it cannot reset the password.
+**Acceptance criteria:** Given an unused, otherwise valid reset link issued at time T, when a reset is attempted before T + 30 minutes, then the link is eligible to reset the password; given an unused, otherwise valid link issued at time T, when a reset is attempted at exactly T + 30 minutes or later, then the link cannot reset the password. In both cases, time is measured from issuance, not from the reset request or link use.
 
 **source_references:** `[{"source_type":"knowledge","source_id":"99467581-e0f3-4ba3-a177-7343cb1097b5","locator":"v1, chunk 0"}]`
 
@@ -125,6 +125,7 @@
 ## Assumptions
 
 - acceptance-20261025063913-5342b5-skill-sentinel acceptance skill produced this output.
+- acceptance-20261025063913-5342b5-same-agent-revision
 - The complete pinned story has no visible end marker; none is copied or invented.
 - The attachment reader exposed only a source reference, not the image or text. No wireframe layout, labels, interactions beyond independently sourced “Forgot password?”, or attachment acceptance marker is assumed.
 - For REQ-001, the wireframe is a design target only; visual comparison awaits viewable contents and does not block inventory of the independently supported recovery behavior.
